@@ -1,0 +1,148 @@
+# ---------- Node ----------
+class Node:
+    def __init__(self, data):                  #ساختن یه نود جدید
+        self.data = data                   #مقداردهی نود
+        self.next = None                   #اشاره به نود بعدی که خالیه
+
+
+# ---------- Singly Linked List ----------
+class LinkedList:
+    def __init__(self):                  
+        self.head = None                   #اشاره به اولین نود لیست 
+        self.size = 0                      #تعداد نود های داخل لیست
+
+    # Insert at beginning
+    def InsertAtBegin(self, data):
+        new_node = Node(data)              #ساخت نود جدید با دیتای داده شده
+        new_node.next = self.head          #نود جدید به نود هد اشاره میکنه
+        self.head = new_node
+        self.size += 1
+
+    # Insert at end
+    def InsertAtEnd(self, data):
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node           #اگه لیست خالی باشه نود جدید میشه نود هد
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next           #اگه لیست خالی نباشه متغیر کمکی دادیم تا برسه به نود آخر
+            temp.next = new_node           #آخرین نود رو به نود جدید وصل میکنیم
+        self.size += 1
+
+    # Insert at specific index
+    def InsertAtIndex(self, data, index):
+        if index < 0 or index > self.size:  #بررسی همخوانی ایندکس با ظرفیت لیست
+            print("Invalid index")
+            return
+
+        if index == 0:
+            self.InsertAtBegin(data)        #اگه ایندکس 0 باشه همون اول لیست درج میشه
+            return
+
+        new_node = Node(data)
+        temp = self.head
+
+        for _ in range(index - 1):          #این حلقه تا جایی پیش میره که به نود قبل از نود جدید برسه
+            temp = temp.next
+
+        new_node.next = temp.next           #نود جدید به نود بعدی اشاره میکنه
+        temp.next = new_node
+        self.size += 1
+
+    # Update node value at index
+    def UpdateNode(self, data, index):
+        if index < 0 or index >= self.size:
+            print("Invalid index")
+            return
+
+        temp = self.head
+        for _ in range(index):
+            temp = temp.next
+
+        temp.data = data                    #تغییر مقدار نود
+
+    # Remove from beginning
+    def RemoveNodeAtBegin(self):
+        if self.head is None:               #بررسی پر یا خالی بودن لیست
+            print("List is empty")
+            return None
+
+        removed_data = self.head.data
+        self.head = self.head.next          #با جابه جایی هد نود اول رو حذف میکنیم
+        self.size -= 1
+        return removed_data
+
+    # Remove from end
+    def RemoveNodeAtEnd(self):
+        if self.head is None:
+            print("List is empty")
+            return None
+
+        if self.head.next is None:
+            return self.RemoveNodeAtBegin() #برا حالتی که فقط یه نود داریم
+
+        temp = self.head
+        while temp.next.next:               #اینجا تا نود ماقبل نود آخر پیش میریم
+            temp = temp.next
+
+        removed_data = temp.next.data
+        temp.next = None                    #اینجا هم اتصال نود آخر به نود قبلیش رو قطع میکنیم
+        self.size -= 1
+        return removed_data
+
+    # Remove at specific index
+    def RemoveNodeAtIndex(self, index):
+        if index < 0 or index >= self.size:
+            print("Invalid index")
+            return None
+
+        if index == 0:
+            return self.RemoveNodeAtBegin()
+
+        temp = self.head
+        for _ in range(index - 1):
+            temp = temp.next
+
+        removed_data = temp.next.data
+        temp.next = temp.next.next
+        self.size -= 1
+        return removed_data
+
+    # Return size of list
+    def SizeOfList(self):
+        return self.size
+
+    # Concatenate another linked list
+    def Concatenate(self, other_list):
+        if self.head is None:
+            self.head = other_list.head
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = other_list.head
+
+        self.size += other_list.size
+
+    # Invert (reverse) the linked list
+    def Invert(self):
+        prev = None
+        current = self.head
+
+        while current:
+            next_node = current.next
+            current.next = prev
+            prev = current
+            current = next_node
+
+        self.head = prev
+
+    # Display list (for testing)
+    def Display(self):
+        temp = self.head
+        while temp:
+            print(temp.data, end=" -> ")
+            temp = temp.next
+        print("None")
