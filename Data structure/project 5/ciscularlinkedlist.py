@@ -1,5 +1,3 @@
-from typing import dataclass_transform
-
 
 class Node:
     def __init__(self , data = None):
@@ -24,7 +22,7 @@ def InsertAtBegin(self,data):
         t.next = new_node
         self.head = new_node
 
-    self.size +=1
+
 
 def InserAtEnd (self , data):
     if self.head is None :
@@ -37,11 +35,9 @@ def InserAtEnd (self , data):
         t=t.next 
     t.next = new_node
     new_node.next = self.head
-    self.size +=1
+
 
 def InserAtIndex(self,data,index):
-    if (index > self.size) |(index<0):
-        print("Index out of range")
     if index == 0 :
         self.InserAtBegin(data)
         return
@@ -51,42 +47,47 @@ def InserAtIndex(self,data,index):
     
     new_node = Node(data)
     t = self.head
+    count = 0
 
     for _ in range(index -1):
         t = t.next
+        count +=1
     new_node.next = t.next
     t.next = new_node
-    self.size +=1
 
-def UpdateNode(self , data , index):
-    if (index > self.size) |(index<0):
-        print("Index out of range")
+
+def UpdateNode(self , old_data , new_data):
+    if not self.head :
+        return
     t = self.head 
-    for _ in range(index):
-        t = t.next 
-    t.data = data
+    while True :
+      if t.data = data :
+          t.data = new_data
+          return
+      t = t.next
+      if t == self.head :
+          beark
 
 def RemoveNodeBegin (self):
    
-    if self.size == 1 :
-        self.head = None
-        self.size = 0
-    removed_data = self.head.data
+    if not self.head :
+        return
     if self.head.next == self.head :
         self.head = None
     else:
         t = self.head 
         while t.next != self.head:
             t = t.next 
-        self.head = self.head.next 
-        t.next = self.head
-    self.size -=1
+        t.head = self.head.next 
+        self.head= self.head.next
     return removed_data
 
 def RemoveNodeAtEnd(self):
-    if self.size == 1 :
+    if not self.head :
+        return
+    if self.head.next == self.head :
         self.head = None
-        self.size = 0
+    else :
     t = self.head
     while t.next.next != self.head:
         t = t.next 
@@ -96,8 +97,6 @@ def RemoveNodeAtEnd(self):
     return removed_data
 
 def RemoveNodeAtIndex(self,index):
-     if (index > self.size) |(index<0):
-        print("Index out of range")
      if index == 0:
          return self.RemoveNodeBegin()
      if index == self.size-1 :
@@ -134,16 +133,15 @@ def  Invert(self):
     if self.head is None or self.head.next == self.head:
         return
     p = None
-    q = self.head
-    t=q.next
+    c = self.head
+    first = self.head
     while True :
-        next_node = q.next 
-        q.next = p
-        p = q
-        q = next_node
-        if q == self.head :
+        next_node = c.next
+        p = c
+        c = next_node
+        if c == self.head :
          break 
-    self.head.next = p
+    first.next = p
     self.head = p
 
 
@@ -158,5 +156,6 @@ def  Invert(self):
  
 
     
+
 
 
