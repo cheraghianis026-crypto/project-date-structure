@@ -6,7 +6,7 @@ class Queue :
         self.rear = -1
     
     def enqueue(self , value):
-       if self.front == self.size -1 :
+       if self.rear == self.size -1 :
            print("queue is full")
            return
        self.rear +=1 
@@ -23,4 +23,5 @@ class Queue :
         return value
 
            
+
 
