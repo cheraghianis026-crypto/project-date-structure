@@ -16,12 +16,13 @@ class Queue :
           
 
     def dequeue (self):
-        if self.front == -1 or self.front > self.rear :
+        if self.front == -1 :
             print("queue is empty")
         value = self.queu[self.front]
         self.front +=1
         return value
 
            
+
 
 
